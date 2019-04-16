@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue为对象数据设置值</title>
+		<script src="js/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<ul>
+				<template v-for="(item,key,index) in userInfo">
+					<li>
+						{{item}}------{{key}}-------{{index}}
+					</li>
+				</template>
+			</ul>
+			
+		</div>
+	</body>
+	<script type="application/javascript">
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				userInfo:{
+					name:"张三",
+					age:23,
+					gender:"男"
+				}
+			}
+		});
+		//向对象增加属性时,使用vue.set才可以触发响应式,不可使用对象点直接添加属性
+		//向数组添加元素时需要调用数组的方法才能触发,直接使用下标方式添加不能触发
+		vm.$set(vm.userInfo,"addr","guangdong");//等价于: Vue.set(vm.userInfo,"addr","guangdong");
+	</script>
+</html>

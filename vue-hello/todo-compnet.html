@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue组件(全局组件,局部组件)</title>
+		<script src="js/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<input type="text" v-model="inputcontent"/>
+			<button type="button" v-on:click="inputSub()">提交</button>
+			<ul>
+				<todo v-bind:content="item1" v-for="(item1,index1) in list1" v-on:click="addList2(item1,index1)"></todo>
+			</ul>
+			<ul>
+				<todo v-bind:content="item2" v-for="item2 in list2"></todo>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+		//全局组件注册
+		/* Vue.component("todo",{
+			props:['content'],
+			template:"<li>{{content}}</li>"
+		}); */
+		var todo={
+			props:['content'],
+			template:"<li>{{content}}</li>"
+		}
+		var vm=new Vue({
+			el:"#app",
+			//局部组件注册
+			components:{
+				todo:todo
+			},
+			data:{
+				inputcontent:"",
+				list1:["张三","李四","王五","赵六"],
+				list2:[]
+			},
+			methods:{
+				addList2:function(name,index){
+					alert(index);
+					vm.list1.splice(index, 1);
+					vm.list2.push(name);
+				},
+				inputSub:function(){
+					vm.list1.push(vm.inputcontent);
+					vm.inputcontent="";
+				}
+			}
+		});
+	</script>
+</html>

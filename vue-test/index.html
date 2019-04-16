@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>vue测试</title>
+		<script src="js/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<div>
+				{{count}}
+			</div>
+			<comp @add="childclick"></comp>
+			<comp @add="childclick"></comp>
+			<comp @add="childclick"></comp>
+		</div>
+	</body>
+	<script type="application/javascript">
+		
+		var comp={
+			template:"<div @click='parentadd'>加一</div>",
+			methods:{
+				parentadd:function(){
+					this.$emit("add");
+				}
+			}
+		}
+		var vm=new Vue({
+			el:"#app",
+			components:{
+				comp:comp
+			},
+			data:{
+				count:0
+			},
+			methods:{
+				childclick:function(){
+					this.count++;
+				}
+			}
+			
+		});
+	</script>
+</html>

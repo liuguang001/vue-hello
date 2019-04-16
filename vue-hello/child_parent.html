@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>父子组件传值(子组件不能强行修改父组件传值)</title>
+		<script src="js/vue.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<div id="app">	
+			<dateitem :content="1"></dateitem>
+			<dateitem :content="2"></dateitem>
+			<dateitem :content="3"></dateitem>
+		</div>
+	</body>
+	<script type="text/javascript">
+		Vue.component("dateitem",{
+			props:['content'],
+			template:"<div @click='contentadd'>{{contentData}}</div>",
+			data:function(){
+				return {
+					contentData:this.content
+				}
+			},
+			methods:{
+				contentadd:function(){
+					this.contentData++;
+				}
+			}
+		});
+ 		var vm=new Vue({
+			el:"#app",
+			data:{
+				total:"nihao1"
+			},
+			methods:{
+				
+			}
+		});
+	</script>
+</html>

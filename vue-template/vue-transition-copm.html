@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>vue动画组件封装</title>
+		<script src="js/vue.js"></script>
+		<script src="js/velocity.min.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<comp :show="isShow">
+				<h1>VUE动画</h1>
+			</comp>
+			<button @click="buttonclick">切换</button>
+		</div>
+	</body>
+	<script type="application/javascript">
+		var comp={
+			props:["show"],
+			template:"<transition @before-enter='beforehandle' @enter='enterhandle' @after-enter='afterhandle'><slot v-if='show'></slot></transition>",
+			methods:{
+				beforehandle:function(el){
+					el.style.opacity=0
+				},
+				enterhandle:function(el,down){
+					Velocity(el,{opacity:1},{duration:3000,down});
+				},
+				afterhandle:function(el){
+					el.style.color="red";
+				}
+			}
+		}
+		var vm=new Vue({
+			el:"#app",
+			components:{
+				comp:comp
+			},
+			data:{
+				isShow:true
+			},
+			methods:{
+				buttonclick:function(){
+					this.isShow=!this.isShow;
+				}
+			}
+		});
+	</script>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>计算属性</title>
+		<script src="js/vue.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			{{fullName}}
+		</div>
+	</body>
+	<script type="application/javascript">
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				firstName:"li",
+				secondName:"si"
+			},
+			//计算属性,会使用缓存,如果没有更新变量,则不进行计算
+			computed:{
+				fullName:function(){
+					return this.firstName+this.secondName;
+				}
+			}
+		});
+	</script>
+</html>

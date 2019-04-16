@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>绑定多个属性</title>
+		<script src="js/vue.js"></script>
+		<style>
+			.active{
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<h1 v-bind:class="[active]" v-on:click="clickhandle">你好vue</h1>
+		</div>
+	</body>
+	<script type="application/javascript">
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				active:""
+			},
+			methods:{
+				clickhandle:function(){
+					if(this.active===""){
+							this.active="active";
+					}else{
+						this.active="";
+					}
+					
+				}
+			}
+		});
+	</script>
+</html>

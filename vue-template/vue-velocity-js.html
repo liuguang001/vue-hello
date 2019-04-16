@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>velocity动画</title>
+		<script src="js/vue.js"></script>
+		<script src="js/velocity.min.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<transition 
+			@before-enter="handleBeforeEnter"
+			@enter="handleEnter"
+			@after-enter="handleAfterEnter"
+			>
+				<h1 v-show="isShow">VUE动画</h1>
+			</transition>
+			<button @click="buttonclick">切换</button>
+		</div>
+	</body>
+	<script type="application/javascript">
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				isShow:false
+			},
+			methods:{
+				buttonclick:function(){
+					this.isShow=!this.isShow;
+				},
+				handleBeforeEnter:function(el){
+					console.log("handleBeforeEnter");
+					el.style.opacity=0;
+				},
+				handleEnter:function(el,down){
+					console.log("handleEnter");
+					Velocity(el,{
+								opacity: 1
+							},{
+								duration:5000,
+								complete:down
+							});
+				},
+				handleAfterEnter:function(el){
+					console.log("handleAfterEnter");
+				}
+			}
+		});
+	</script>
+</html>

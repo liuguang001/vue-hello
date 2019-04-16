@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>非父子关系传值(中间对象被所有组件拥有,其中之一触发,则触发所有)</title>
+		<script src="js/vue.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<div id="app">
+			<child content="hello"></child>
+			<child content="word"></child>
+			<child content="你好"></child>
+		</div>
+	</body>
+	<script type="text/javascript">
+		//使用vue对象作为全局中间事件保存对象,实现非父子关系传值
+		Vue.prototype.bus=new Vue();
+		Vue.component("child",{
+			props:{
+				content:{
+					type:String
+				}
+			},
+			//使用内部data定义数据,不修改父组件传的值
+			data:function(){
+				return {
+					showData:this.content
+				}
+			},
+			//绑定事件,触发中间对象的事件
+			methods:{
+				childclick:function(){
+					this.bus.$emit("change",this.showData);
+				}
+			},
+			//使用生命周期钩子,待赋值完毕后,为中间对象绑定触发事件
+			mounted:function(){
+				var _this=this;
+				this.bus.$on("change",function(msg){
+					_this.showData=msg;
+				})
+			},
+			template:"<div v-on:click='childclick'>{{showData}}</div>"
+		});
+		var vm=new Vue({
+			el:"#app"
+		});
+	</script>
+</html>
